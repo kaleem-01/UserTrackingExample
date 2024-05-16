@@ -41,18 +41,15 @@ Session(app)
 # The data is inserted into the `PageView` table in the 'test.db' database. 
 
 def log_data():   
-    try:
-        id = session.get('id') # Every session has an id. "id" variable is created later in the code. "session" variable holds the session specific information in Flask.
-        start_time = session.get("start_time")
-        previous_path = session.get("previous_path")
-    
-        # datetime class is used to access date and time 
-        time_spent = (datetime.now() - start_time).total_seconds()
-        # Record is added to the database using sqlite
-        cur.execute("INSERT INTO PageView (id, page, time_spent, start_time) VALUES (?, ?, ?, ?)", (id, previous_path, time_spent, start_time))
-        conn.commit()
-    except:
-        pass
+    session_id = session.get('id') # Every session has an id. "id" variable is created later in the code. "session" variable holds the session specific information in Flask.
+    start_time = session.get("start_time")
+    previous_path = session.get("previous_path")
+
+    # datetime class is used to access date and time 
+    time_spent = (datetime.now() - start_time).total_seconds()
+    # Record is added to the database using sqlite
+    cur.execute("INSERT INTO PageView (session_id, page, time_spent, start_time) VALUES (?, ?, ?, ?)", (session_id, previous_path, time_spent, start_time))
+    conn.commit()
 
 ##################################################################################
 
@@ -132,12 +129,10 @@ def confirmation():
 @app.route("/log_binary")
 # button_tracking() function saves the id to the 'Button' table of the database if the visitor clicked on the "Contact" button. 
 def button_tracking():
-    try:
-        id = session.get('id')
-        cur.execute("INSERT INTO Button (id, button) VALUES (?, ?)", (id, 1))
-        conn.commit()
-    except:
-        pass
+    session_id = session.get('id')
+    cur.execute("INSERT INTO Button (session_id, button) VALUES (?, ?)", (session_id, 1))
+    conn.commit()
+    
     return redirect('/')
 
 ##################################################################################
