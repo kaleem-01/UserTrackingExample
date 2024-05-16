@@ -68,10 +68,6 @@ def log_data():
 
 @app.after_request
 def track_time(response):
-    try:
-        start_time = session.get("start_time")
-        previous_path = session.get("previous_path")
-    except: pass
     # Every time the user requests default route (/), time spent in the previous path is recorded in the database with log_data(). 
     if request.path == '/':
         log_data()
