@@ -84,7 +84,7 @@ def track_time(response):
         log_data()
         # Update start_time and previous_path
         session["start_time"] = datetime.now()
-        session["previous_path"] = 'HomePage'
+        session["previous_path"] = 'LearnMore'
 
     # Every time the user requests  /confirmation route, time spent in the previous path is recorded in the database with log_data(). 
     if request.path == '/confirmation':
