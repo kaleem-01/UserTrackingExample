@@ -11,7 +11,7 @@ from flask import Flask, request, session, render_template, redirect
 from datetime import datetime
 from flask_session import Session
 import sqlite3
-from random import random
+from random import randint
 
 #######################################
 # The code used here is the standard for app configuration. The application is called "app" and it is a Flask object. 
@@ -91,6 +91,15 @@ def track_time(response):
     
     return response
 
+@app.before_request
+def assign_id():
+    # Every time a user accesses the website, a random ID is created because we need to track the user.
+    # Information in each new user session can be stored as a 'key, value' pair in the `session` object.
+    # Add id to the session
+    if "id" not in session:
+        session["id"] = randint(1_000_000, 9_999_999)
+
+
 ##################################################################################
 
 ##################################################################################
@@ -103,14 +112,6 @@ def track_time(response):
 
 @app.route('/')
 def index():
-    # Every time a user lands to the homepage, a random ID is created because we need to track the user.
-    # Information in each new user session can be stored as a 'key, value' pair in the `session` object.
-    # Add id to the session
-    try:
-        if session["id"]: 
-            pass
-    except:
-        session["id"] = int(round(random(), 8) * 10000000) 
     return render_template('index.html')
 
 @app.route('/learn_more')
