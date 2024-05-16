@@ -1,0 +1,1 @@
+This repository has a simple implementation of a Flask app that tracks the amount of time spent on the website. This is similar to the repository WebsiteTemplateCSSci but uses SQLite to manage data instead of SQLAlchemy.
