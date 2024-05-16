@@ -110,10 +110,11 @@ def index():
     # Every time a user lands to the homepage, a random ID is created because we need to track the user.
     # Information in each new user session can be stored as a 'key, value' pair in the `session` object.
     # Add id to the session
-    if id:
-        session["id"] = id
-    else:
-        id =  int(round(random(), 8) * 10000000)
+    try:
+        if session["id"]: 
+            pass
+    except:
+        session["id"] = int(round(random(), 8) * 10000000) 
     return render_template('index.html')
 
 @app.route('/learn_more')
