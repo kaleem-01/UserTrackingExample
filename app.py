@@ -85,6 +85,9 @@ def track_time(response):
     # Every time the user requests  /confirmation route, time spent in the previous path is recorded in the database with log_data(). 
     if request.path == '/confirmation':
         log_data()
+        del session["start_time"]
+        del session["previous_path"]
+
     
     return response
 
